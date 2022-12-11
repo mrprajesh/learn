@@ -1,6 +1,6 @@
 ##out files
 *.out
-
+.vscode/
 
 # Prerequisites
 *.d
