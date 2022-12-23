@@ -1,5 +1,6 @@
 //~~~START:Fri, 02-Sep-2022, 12:48:21 IST
 //~~~Author:Rajesh Pandian M | mrprajesh.co.in
+//~ nvc++ -acc -gpu=managed -Minfo=all hello.cpp -o hello.out && ./hello.out
 
 #include <iostream>
 #include <iterator>
