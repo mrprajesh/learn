@@ -7,29 +7,29 @@
 using namespace std;
 int main(int argc, char* argv[]){
   
-  unsigned n = 1 << 28;
+  unsigned n = 1 << 10;
   
   int* a = (int*) malloc (sizeof(int) *n);
   long long int sum = 0; // IDENTITY
-  long long int sum2 = 0; // IDENTITY
+  //~ long long int sum2 = 0; // IDENTITY
   long long int prod = 1; // IDENTITY
 
   
   auto start = std::chrono::high_resolution_clock::now();
 
-  #pragma acc data create(a) copyin(sum,prod) //copyout(sum,prod) 
+  #pragma acc data create(a) copy(sum,prod) //copyin(sum,prod) copyout(sum,prod) 
   {
   
     #pragma acc parallel loop  
     for(size_t ii=0; ii < n ; ++ii){
-      a[ii] = 1;
+      a[ii] = 2;
     }
     
-    #pragma acc parallel loop  reduction(+:sum) reduction(+:sum2)
-    for(size_t ii=0; ii < n ; ++ii) {
-      sum+=a[ii];
-      sum2+=a[ii];
-    }
+    //~ #pragma acc parallel loop  reduction(+:sum), reduction(+:sum2)
+    //~ for(size_t ii=0; ii < n ; ++ii) {
+      //~ sum+=a[ii];
+      //~ sum2+=a[ii];
+    //~ }
     
     #pragma acc parallel loop  reduction(+:sum) reduction(*:prod)
     for(size_t ii=0; ii < n ; ++ii) {
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
   
   std::cout << "Time: " << diff.count() << " s\n";
   std::cout<< "Sum  :" << sum << '\n';
-  std::cout<< "Sum2 :" << sum2 << '\n';
+  //~ std::cout<< "Sum2 :" << sum2 << '\n';
   std::cout<< "Prod :" << prod << '\n';
   
   return 0;

@@ -2,6 +2,10 @@
 //~~~Author:Rajesh Pandian M | mrprajesh.co.in
 //~ nvc++ -acc -gpu=managed -Minfo=all shuffle-on-gpu.cpp -o shuffle-on-gpu.out && ./shuffle-on-gpu.out
 
+//~ N:536870912
+//~ Failing in Thread:1
+//~ call to cuStreamSynchronize returned error 700: Illegal address during kernel execution
+
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -22,9 +26,9 @@ int main(int argc, char* argv[]) {
   //~ int* b = (int*) malloc (sizeof(int) *N);
   //~ int* c = (int*) malloc (sizeof(int) *N);
   
-  thrust::host_vector a(N);
-  thrust::host_vector b(N);
-  thrust::host_vector c(N);
+  thrust::host_vector<int> a(N);
+  thrust::host_vector<int> b(N);
+  thrust::host_vector<int> c(N);
   
   
   unsigned long long int sum = 0.0;
@@ -32,7 +36,7 @@ int main(int argc, char* argv[]) {
   auto start = std::chrono::high_resolution_clock::now();
 
 
-  #pragma acc data create(a,b)  
+  #pragma acc data create(a,b) copyout(a)  
   
   {
   

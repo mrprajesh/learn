@@ -14,9 +14,9 @@ int main(int argc, char* argv[]) {
   vector<int> a(n);
   vector<int> b(n);
   vector<int> c(n);
-  double sum = 0.0;
+  long sum = 0.0;
   
-  #pragma acc data copyin(a,b), copyout(c,sum) 
+  #pragma acc data copyin(a,b), copyout(sum) 
   //~ #pragma acc data copy(a,b,c)
   {
   
